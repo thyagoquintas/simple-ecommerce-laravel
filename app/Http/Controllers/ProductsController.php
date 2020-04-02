@@ -60,14 +60,10 @@ class ProductsController extends Controller
         return redirect(route('products.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Product $product)
     {
-        //
+        $product->delete();
+        session()->flash('success', 'Produto deletado com sucesso!');
+        return redirect(route('products.index'));
     }
 }

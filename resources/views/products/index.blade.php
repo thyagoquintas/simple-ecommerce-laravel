@@ -10,7 +10,11 @@
         <span>{{$product->name}}</span>
         <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
-        <a href="#" class="btn btn-danger btn-sm float-right">Apagar</a>
+        <form action="{{ route('products.destroy', $product->id) }}" class="d-inline" method="POST" onsubmit="return confirm('Você tem certeza que quer apagar?')">
+            @csrf
+            @method('DELETE')
+            <button type="submit" href="#" class="btn btn-danger btn-sm float-right">Apagar</a>
+        </form>
     </li>
     @endforeach
 </ul>

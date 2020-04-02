@@ -56,14 +56,10 @@ class CategoriesController extends Controller
         return redirect(route('categories.index'));
     }
 
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
+    public function destroy(Category $category)
     {
-        //
+        $category->delete();
+        session()->flash('success', 'Categoria deletada com sucesso!');
+        return redirect(route('categories.index'));
     }
 }
