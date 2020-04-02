@@ -14,23 +14,23 @@
     @csrf
     <div class="form-group">
         <label for="name">Nome:</label>
-        <input type="text" class="form-control" name="name" placeholder="Digite o nome do produto">
+        <input type="text" class="form-control" name="name" placeholder="Digite o nome do produto" value="{{ old('name') }}">
     </div>
     <div class="form-group">
-        <label for="name">Descrição:</label>
-        <textarea class="form-control" name="description" placeholder="Digite a descrição do produto"></textarea>
+        <label for="description">Descrição:</label>
+        <textarea class="form-control" name="description" placeholder="Digite a descrição do produto">{{ old('description') }}</textarea>
     </div>
     <div class="form-group">
-        <label for="name">Preço:</label>
-        <input type="number" class="form-control" name="price">
+        <label for="price">Preço:</label>
+        <input type="number" class="form-control" name="price" value="{{ old('price') }}">
     </div>
     <div class="form-group">
-        <label for="name">Desconto:</label>
-        <input type="number" class="form-control" name="discount" value="0">
+        <label for="discount">Desconto:</label>
+        <input type="number" class="form-control" name="discount" value="{{ old('discount') }}">
     </div>
     <div class="form-group">
-        <label for="name">Número de produtos em estoque:</label>
-        <input type="number" class="form-control" name="stock" value="0">
+        <label for="stock">Número de produtos em estoque:</label>
+        <input type="number" class="form-control" name="stock" value="{{ old('stock') }}">
     </div>
     <div class="form-group" style="display:none">
         <label for="name">Imagem:</label>

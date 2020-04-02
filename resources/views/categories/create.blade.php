@@ -14,7 +14,7 @@
     @csrf
     <div class="form-group">
         <label for="name">Nome:</label>
-        <input type="text" class="form-control" name="name" placeholder="Digite o nome da categoria">
+        <input type="text" class="form-control" name="name" placeholder="Digite o nome da categoria" value="{{ old('name') }}">
     </div>
     <button type="submit" class="btn btn-success">Criar categoria</button>
 </form>
