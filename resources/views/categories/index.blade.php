@@ -9,7 +9,7 @@
     <li class="list-group-item">
         <span>{{$category->name}}</span>
         <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
-        <a href="#" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
+        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
         <a href="#" class="btn btn-danger btn-sm float-right">Apagar</a>
     </li>
     @endforeach

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Http\Requests\CreateProductRequest;
+use App\Http\Requests\EditProductRequest;
 
 class ProductsController extends Controller
 {
@@ -40,27 +41,23 @@ class ProductsController extends Controller
         //
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
+    public function edit(Product $product)
     {
-        //
+        return view('products.edit')->with('product', $product);
     }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function update(EditProductRequest $request, Product $product)
     {
-        //
+        $product->update([
+            'name' => $request->name,
+            'description' => $request->description,
+            'price' => $request->price,
+            'discount' => $request->discount,
+            'stock' => $request->stock
+        ]);
+
+        session()->flash('success', 'Produto alterado com sucesso!');
+        return redirect(route('products.index'));
     }
 
     /**
