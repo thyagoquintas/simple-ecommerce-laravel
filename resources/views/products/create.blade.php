@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <h2>Cria Produto</h2>
-<form action="{{ route('products.store') }}" class="bg-white p-3" method="POST">
+<form action="{{ route('products.store') }}" class="bg-white p-3" method="POST" enctype="multipart/form-data">
     @if($errors->any())
         <div class="alert alert-danger">
             <ul class="list-group">
@@ -21,6 +21,14 @@
         <textarea class="form-control" name="description" placeholder="Digite a descrição do produto">{{ old('description') }}</textarea>
     </div>
     <div class="form-group">
+        <label for="category">Categoria:</label>
+        <select name="category_id" class="form-control">
+            @foreach($categories as $category)
+            <option value="{{$category->id}}">{{$category->name}}</option>
+            @endforeach
+        </select>
+    </div>
+    <div class="form-group">
         <label for="price">Preço:</label>
         <input type="number" class="form-control" name="price" value="{{ old('price') }}">
     </div>
@@ -32,9 +40,9 @@
         <label for="stock">Número de produtos em estoque:</label>
         <input type="number" class="form-control" name="stock" value="{{ old('stock') }}">
     </div>
-    <div class="form-group" style="display:none">
+    <div class="form-group">
         <label for="name">Imagem:</label>
-        <input type="text" class="form-control" name="image" value="null">
+        <input type="file" class="form-control" name="image" value="null">
     </div>
     <button type="submit" class="btn btn-success">Criar produto</button>
 </form>

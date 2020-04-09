@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use App\Category;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
 
@@ -20,12 +21,19 @@ class ProductsController extends Controller
 
     public function create()
     {
-        return view('products.create');
+        return view('products.create')->with('categories', Category::all());
     }
 
     public function store(CreateProductRequest $request)
     {
-        Product::create($request->all());
+        //cria a imagem;
+        $image = $request->image->store('products');
+        $product = Product::create($request->all());
+
+        //atualiza o endereço da imagem no banco
+        $product->image = $image;
+        $product->save();
+
         session()->flash('success', 'Produto criado com sucesso!');
         return redirect(route('products.index'));
     }
@@ -43,7 +51,7 @@ class ProductsController extends Controller
 
     public function edit(Product $product)
     {
-        return view('products.edit')->with('product', $product);
+        return view('products.edit')->with('product', $product)->with('categories', Category::all());
     }
 
     public function update(EditProductRequest $request, Product $product)
@@ -53,7 +61,8 @@ class ProductsController extends Controller
             'description' => $request->description,
             'price' => $request->price,
             'discount' => $request->discount,
-            'stock' => $request->stock
+            'stock' => $request->stock,
+            'category_id' => $request->category_id
         ]);
 
         session()->flash('success', 'Produto alterado com sucesso!');

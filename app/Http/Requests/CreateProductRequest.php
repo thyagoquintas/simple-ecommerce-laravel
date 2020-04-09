@@ -15,11 +15,12 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|unique:products|max:255',
-            'image' => 'required',
+            'image' => 'required|image',
             'description' => 'required',
             'price' => 'required',
             'discount' => 'required',
-            'stock' => 'required'
+            'stock' => 'required',
+            'category_id' => 'required'
         ];
     }
 }

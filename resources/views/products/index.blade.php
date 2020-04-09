@@ -7,6 +7,7 @@
 <ul class="list-group">
     @foreach($products as $product)
     <li class="list-group-item">
+        <img src="{{ asset('storage/'.$product->image) }}" width="40" height="40">
         <span>{{$product->name}}</span>
         <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
         <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>

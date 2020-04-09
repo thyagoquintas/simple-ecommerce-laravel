@@ -19,7 +19,8 @@ class EditProductRequest extends FormRequest
             'description' => 'required',
             'price' => 'required',
             'discount' => 'required',
-            'stock' => 'required'
+            'stock' => 'required',
+            'category_id' => 'required'
         ];
     }
 }
