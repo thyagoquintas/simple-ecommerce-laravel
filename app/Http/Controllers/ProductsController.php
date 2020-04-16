@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Category;
+use App\Tag;
 use App\Http\Requests\CreateProductRequest;
 use App\Http\Requests\EditProductRequest;
+use Illuminate\Support\Facades\Storage;
 
 class ProductsController extends Controller
 {
     public function __construct(){
-        $this->middleware('auth');
+        $this->middleware('VerifyCategoriesCount')->only(['create','store']);
     }
 
     public function index()
@@ -21,7 +23,7 @@ class ProductsController extends Controller
 
     public function create()
     {
-        return view('products.create')->with('categories', Category::all());
+        return view('products.create')->with('categories', Category::all())->with('tags', Tag::all());
     }
 
     public function store(CreateProductRequest $request)
@@ -33,6 +35,11 @@ class ProductsController extends Controller
         //atualiza o endereço da imagem no banco
         $product->image = $image;
         $product->save();
+
+        //salva os dados das tags
+        if($request->tags){
+            $product->tags()->attach($request->tags);
+        }
 
         session()->flash('success', 'Produto criado com sucesso!');
         return redirect(route('products.index'));
@@ -69,10 +76,30 @@ class ProductsController extends Controller
         return redirect(route('products.index'));
     }
 
-    public function destroy(Product $product)
+    public function destroy($id)
     {
-        $product->delete();
-        session()->flash('success', 'Produto deletado com sucesso!');
-        return redirect(route('products.index'));
+        $product = Product::withTrashed()->where('id', $id)->firstOrFail();
+
+        if($product->trashed()){
+            Storage::delete($product->image);
+            $product->forceDelete();
+            session()->flash('success', 'Produto removido com sucesso!');
+        }else{
+            $product->delete();
+            session()->flash('success', 'Produto movido para lixeira com sucesso!');
+        }
+        return redirect()->back();
     }
+
+    public function trashed(){
+        return view('products.index')->with('products',Product::onlyTrashed()->get());
+    }
+
+    public function restore($id){
+        $product = Product::withTrashed()->where('id', $id)->firstOrFail();
+        $product->restore();
+        session()->flash('success', 'Produto ativado com sucesso!');
+        return redirect()->back();
+    }
+
 }

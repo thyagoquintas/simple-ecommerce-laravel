@@ -9,12 +9,20 @@
     <li class="list-group-item">
         <img src="{{ asset('storage/'.$product->image) }}" width="40" height="40">
         <span>{{$product->name}}</span>
-        <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
-        <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
+        @if(!$product->trashed())
+            <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
+            <a href="{{ route('products.edit', $product->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
+        @else
+            <form action="{{ route('restore-product.update', $product->id) }}" class="d-inline" method="POST" onsubmit="return confirm('Você tem certeza que quer reativar?')">
+                @csrf
+                @method('PUT')
+                <button type="submit" href="#" class="btn btn-primary btn-sm float-right ml-1">Reativar</button>
+            </form>
+        @endif
         <form action="{{ route('products.destroy', $product->id) }}" class="d-inline" method="POST" onsubmit="return confirm('Você tem certeza que quer apagar?')">
             @csrf
             @method('DELETE')
-            <button type="submit" href="#" class="btn btn-danger btn-sm float-right">Apagar</a>
+            <button type="submit" href="#" class="btn btn-danger btn-sm float-right"> {{ $product->trashed() ? 'Remover' : 'Mover para Lixeira' }}</a>
         </form>
     </li>
     @endforeach

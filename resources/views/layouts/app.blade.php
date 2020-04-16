@@ -76,12 +76,22 @@
             @if(session()->has('success'))
                 <div class="alert alert-success">{{ session()->get('success') }}</div>
             @endif
+            @if(session()->has('error'))
+                <div class="alert alert-danger">{{ session()->get('error') }}</div>
+            @endif
             @auth
             <div class="row">
                 <div class="col-md-3">
                     <ul class="list-group">
                         <li class="list-group-item"><a href="{{ route('products.index') }}">Produtos</a></li>
                         <li class="list-group-item"><a href="{{ route('categories.index') }}">Categorias</a></li>
+                        <li class="list-group-item"><a href="{{ route('tags.index') }}">Tags</a></li>
+                    </ul>
+
+                    <ul class="list-group mt-2">
+                        <li class="list-group-item"><a href="{{ route('trashed-product.index') }}">Lixeira de Produtos</a></li>
+                        <li class="list-group-item"><a href="{{ route('trashed-categories.index') }}">Lixeira de Categorias</a></li>
+                        <li class="list-group-item"><a href="{{ route('trashed-tags.index') }}">Lixeira de Tags</a></li>
                     </ul>
                 </div>
                 <div class="col-md-9">

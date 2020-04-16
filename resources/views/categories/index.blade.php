@@ -8,12 +8,21 @@
     @foreach($categories as $category)
     <li class="list-group-item">
         <span>{{$category->name}}</span>
-        <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
-        <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
+        <span>({{$category->products()->count()}})</span>
+        @if(!$category->trashed())
+            <a href="#" class="btn btn-primary btn-sm float-right ml-1">Visualizar</a>
+            <a href="{{ route('categories.edit', $category->id) }}" class="btn btn-warning btn-sm float-right ml-1">Editar</a>
+        @else
+            <form action="{{ route('restore-categories.update', $category->id) }}" class="d-inline" method="POST" onsubmit="return confirm('Você tem certeza que quer reativar?')">
+                @csrf
+                @method('PUT')
+                <button type="submit" href="#" class="btn btn-primary btn-sm float-right ml-1">Reativar</button>
+            </form>
+        @endif
         <form action="{{ route('categories.destroy', $category->id) }}" class="d-inline" method="POST" onsubmit="return confirm('Você tem certeza que quer apagar?')">
             @csrf
             @method('DELETE')
-            <button type="submit" href="#" class="btn btn-danger btn-sm float-right">Apagar</a>
+            <button type="submit" href="#" class="btn btn-danger btn-sm float-right">{{ $category->trashed() ? 'Remover' : 'Mover para Lixeira' }}</a>
         </form>
     </li>
     @endforeach

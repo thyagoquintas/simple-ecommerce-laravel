@@ -2,22 +2,21 @@
 
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-
 Route::get('/', function () {
     return view('welcome');
 });
 
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
-Route::resource('categories', 'CategoriesController');
-Route::resource('products', 'ProductsController');
+
+Route::middleware('auth')->group(function(){
+    Route::resource('categories', 'CategoriesController');
+    Route::get('trashed-categories','CategoriesController@trashed')->name('trashed-categories.index');
+    Route::put('restore-categories/{category}','CategoriesController@restore')->name('restore-categories.update');
+    Route::resource('products', 'ProductsController');
+    Route::get('trashed-product','ProductsController@trashed')->name('trashed-product.index');
+    Route::put('restore-product/{product}','ProductsController@restore')->name('restore-product.update');
+    Route::resource('tags', 'TagsController');
+    Route::get('trashed-tags','TagsController@trashed')->name('trashed-tags.index');
+    Route::put('restore-tags/{tag}','TagsController@restore')->name('restore-tags.update');
+});
