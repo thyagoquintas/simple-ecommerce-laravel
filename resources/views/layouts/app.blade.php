@@ -80,24 +80,29 @@
                 <div class="alert alert-danger">{{ session()->get('error') }}</div>
             @endif
             @auth
-            <div class="row">
-                <div class="col-md-3">
-                    <ul class="list-group">
-                        <li class="list-group-item"><a href="{{ route('products.index') }}">Produtos</a></li>
-                        <li class="list-group-item"><a href="{{ route('categories.index') }}">Categorias</a></li>
-                        <li class="list-group-item"><a href="{{ route('tags.index') }}">Tags</a></li>
-                    </ul>
+                @if(auth()->user()->isAdmin())
+                    <div class="row">
+                        <div class="col-md-3">
+                            <ul class="list-group">
+                                <li class="list-group-item"><a href="{{ route('products.index') }}">Produtos</a></li>
+                                <li class="list-group-item"><a href="{{ route('categories.index') }}">Categorias</a></li>
+                                <li class="list-group-item"><a href="{{ route('tags.index') }}">Tags</a></li>
+                                <li class="list-group-item"><a href="{{ route('users.index') }}">Usuários</a></li>
+                            </ul>
 
-                    <ul class="list-group mt-2">
-                        <li class="list-group-item"><a href="{{ route('trashed-product.index') }}">Lixeira de Produtos</a></li>
-                        <li class="list-group-item"><a href="{{ route('trashed-categories.index') }}">Lixeira de Categorias</a></li>
-                        <li class="list-group-item"><a href="{{ route('trashed-tags.index') }}">Lixeira de Tags</a></li>
-                    </ul>
-                </div>
-                <div class="col-md-9">
+                            <ul class="list-group mt-2">
+                                <li class="list-group-item"><a href="{{ route('trashed-product.index') }}">Lixeira de Produtos</a></li>
+                                <li class="list-group-item"><a href="{{ route('trashed-categories.index') }}">Lixeira de Categorias</a></li>
+                                <li class="list-group-item"><a href="{{ route('trashed-tags.index') }}">Lixeira de Tags</a></li>
+                            </ul>
+                        </div>
+                        <div class="col-md-9">
+                            @yield('content')
+                        </div>
+                    </div>
+                @else
                     @yield('content')
-                </div>
-            </div>
+                @endif
             @else
                 @yield('content')
             @endauth

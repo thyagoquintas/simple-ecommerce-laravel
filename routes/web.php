@@ -9,7 +9,7 @@ Route::get('/', function () {
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
 
-Route::middleware('auth')->group(function(){
+Route::middleware(['auth','admin'])->group(function(){
     Route::resource('categories', 'CategoriesController');
     Route::get('trashed-categories','CategoriesController@trashed')->name('trashed-categories.index');
     Route::put('restore-categories/{category}','CategoriesController@restore')->name('restore-categories.update');
@@ -19,4 +19,6 @@ Route::middleware('auth')->group(function(){
     Route::resource('tags', 'TagsController');
     Route::get('trashed-tags','TagsController@trashed')->name('trashed-tags.index');
     Route::put('restore-tags/{tag}','TagsController@restore')->name('restore-tags.update');
+    Route::get('users', 'UsersController@index')->name('users.index');
+    Route::put('users/{user}/change-admin', 'UsersController@changeAdmin')->name('users.change-admin');
 });
