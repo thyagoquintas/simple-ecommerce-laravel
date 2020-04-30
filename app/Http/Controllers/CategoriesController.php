@@ -58,6 +58,13 @@ class CategoriesController extends Controller
     public function destroy($id)
     {
         $category = Category::withTrashed()->where('id', $id)->firstOrFail();
+
+        $product_count = $category->products()->count();
+        if($category->products()->count() > 0){
+            session()->flash('error', 'Não pode ser apagada pois temos ('.$product_count.') produto(s) com essa categoria');
+            return redirect()->back();
+        }
+
         if($category->trashed()){
             $category->forceDelete();
             session()->flash('success', 'Categoria removida com sucesso!');

@@ -1,0 +1,30 @@
+@extends('layouts.app')
+@section('content')
+<h2>Editar Perfil</h2>
+<form action="{{ route('users.update-profile', $user->id) }}" class="bg-white p-3" method="POST">
+    @if($errors->any())
+        <div class="alert alert-danger">
+            <ul class="list-group">
+                @foreach($errors->all() as $error)
+                    <li class="list-group-item text-danger">{{$error}}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
+    @csrf
+    @method('PUT')
+    <div class="form-group">
+        <label for="name">Nome:</label>
+        <input type="text" class="form-control" name="name" placeholder="Digite seu nome" value="{{ $user->name }}">
+    </div>
+    <div class="form-group">
+        <label for="name">E-mail:</label>
+        <input type="text" class="form-control" name="email" placeholder="Digite seu e-mail" value="{{ $user->email }}">
+    </div>
+    <div class="form-group">
+        <label for="name">Password:</label>
+        <input type="password" class="form-control" name="password" placeholder="Digite sua senha">
+    </div>
+    <button type="submit" class="btn btn-success">Salvar</button>
+</form>
+@endsection

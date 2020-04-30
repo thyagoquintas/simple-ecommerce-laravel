@@ -15,7 +15,6 @@ class EditProductRequest extends FormRequest
     {
         return [
             'name' => 'required|max:255',
-            'image' => 'required',
             'description' => 'required',
             'price' => 'required',
             'discount' => 'required',

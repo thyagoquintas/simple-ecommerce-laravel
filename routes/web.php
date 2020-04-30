@@ -2,12 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
 Auth::routes();
+Route::get('/', 'HomeController@show');
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::middleware(['auth'])->group(function(){
+    Route::get('users/profile', 'UsersController@edit')->name('users.edit-profile');
+    Route::put('users/profile', 'UsersController@update')->name('users.update-profile');
+});
 
 Route::middleware(['auth','admin'])->group(function(){
     Route::resource('categories', 'CategoriesController');

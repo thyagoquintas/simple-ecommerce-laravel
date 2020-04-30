@@ -1,7 +1,14 @@
 @extends('layouts.app')
+@section('javascript')
+    <script>
+        window.onload = function() {
+            $('.tags_select2').select2();
+        };
+    </script>
+@endsection
 @section('content')
 <h2>Editar Produto</h2>
-<form action="{{ route('products.update', $product->id) }}" class="bg-white p-3" method="POST">
+<form action="{{ route('products.update', $product->id) }}" class="bg-white p-3" method="POST" enctype="multipart/form-data">
     @if($errors->any())
         <div class="alert alert-danger">
             <ul class="list-group">
@@ -43,19 +50,19 @@
         <label for="stock">Número de produtos em estoque:</label>
         <input type="number" class="form-control" name="stock" value="{{ $product->stock }}">
     </div>
-    <div class="form-group" style="display:none">
-        <label for="name">Imagem:</label>
-        <input type="text" class="form-control" name="image" value="null">
-    </div>
     <div class="form-group">
         <label for="tags">Tags:</label>
-        <select name="tags[]" class="form-control" multiple>
+        <select name="tags[]" class="form-control tags_select2" multiple>
             @foreach($tags as $tag)
             <option value="{{$tag->id}}" {{ $product->hasTag($tag->id) ? 'selected' : '' }}>
                 {{$tag->name}}
             </option>
             @endforeach
         </select>
+    </div>
+    <div class="form-group">
+        <label for="name">Imagem:</label>
+        <input type="file" class="form-control" name="image">
     </div>
     <button type="submit" class="btn btn-success">Salvar produto</button>
 </form>

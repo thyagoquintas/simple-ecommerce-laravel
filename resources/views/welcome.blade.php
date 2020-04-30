@@ -1,100 +1,51 @@
-<!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
+@extends('layouts.store')
+@section('css')
+<style>
+.banner {
+    min-height: 400px;
+    background: url('http://via.placeholder.com/1100x400');
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
 
-        <title>Laravel</title>
-
-        <!-- Fonts -->
-        <link href="https://fonts.googleapis.com/css?family=Nunito:200,600" rel="stylesheet">
-
-        <!-- Styles -->
-        <style>
-            html, body {
-                background-color: #fff;
-                color: #636b6f;
-                font-family: 'Nunito', sans-serif;
-                font-weight: 200;
-                height: 100vh;
-                margin: 0;
-            }
-
-            .full-height {
-                height: 100vh;
-            }
-
-            .flex-center {
-                align-items: center;
-                display: flex;
-                justify-content: center;
-            }
-
-            .position-ref {
-                position: relative;
-            }
-
-            .top-right {
-                position: absolute;
-                right: 10px;
-                top: 18px;
-            }
-
-            .content {
-                text-align: center;
-            }
-
-            .title {
-                font-size: 84px;
-            }
-
-            .links > a {
-                color: #636b6f;
-                padding: 0 25px;
-                font-size: 13px;
-                font-weight: 600;
-                letter-spacing: .1rem;
-                text-decoration: none;
-                text-transform: uppercase;
-            }
-
-            .m-b-md {
-                margin-bottom: 30px;
-            }
-        </style>
-    </head>
-    <body>
-        <div class="flex-center position-ref full-height">
-            @if (Route::has('login'))
-                <div class="top-right links">
-                    @auth
-                        <a href="{{ url('/home') }}">Home</a>
-                    @else
-                        <a href="{{ route('login') }}">Login</a>
-
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}">Register</a>
-                        @endif
-                    @endauth
+.old-price {
+    text-decoration: line-through;
+}
+</style>
+@endsection
+@section('content')
+    <section class="banner d-flex align-items-center px-4">
+        <div>
+            <span class="h2 d-block m-0 text-capitalize">Toda nossa loja está</span>
+            <span class="h1 d-block mb-3 text-uppercase font-weight-bold">em promoção</span>
+            <a href="#" class="btn btn-primary">Veja nossos produtos</a>
+        </div>
+    </section>
+    <section class="container py-5">
+        <div class="row">
+            <div class="mx-auto col-10 text-center">
+                <h2 class="text-uppercase">Nossos Produtos</h2>
+                <p class="text-muted">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Delectus, ducimus.</p>
+            </div>
+            <div class="row">
+            @foreach($products as $product)
+                <div class="mx-auto col-sm-10 col-md-6 col-lg-3">
+                    <div class="mb-3">
+                        <img src="{{ asset('storage/'.$product->image) }}" class="img-fluid">
+                        <div class="text-center mt-3">
+                            <a href="#" class="btn btn-primary btn-sm">Visualizar</a>
+                            <a href="#" class="btn btn-secondary btn-sm">Compar</a>
+                        </div>
+                        <span class="d-block h6 text-center mt-4">{{$product->name}}</span>
+                        <div class="text-center">
+                            <span class="text-muted old-price">{{$product->fPrice()}}</span>
+                            <span class="">{{$product->fDiscountPrice()}}</span>
+                        </div>
+                    </div>
                 </div>
-            @endif
-
-            <div class="content">
-                <div class="title m-b-md">
-                    Laravel
-                </div>
-
-                <div class="links">
-                    <a href="https://laravel.com/docs">Docs</a>
-                    <a href="https://laracasts.com">Laracasts</a>
-                    <a href="https://laravel-news.com">News</a>
-                    <a href="https://blog.laravel.com">Blog</a>
-                    <a href="https://nova.laravel.com">Nova</a>
-                    <a href="https://forge.laravel.com">Forge</a>
-                    <a href="https://vapor.laravel.com">Vapor</a>
-                    <a href="https://github.com/laravel/laravel">GitHub</a>
-                </div>
+            @endforeach
             </div>
         </div>
-    </body>
-</html>
+    </section>
+@endsection

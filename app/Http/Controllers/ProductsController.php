@@ -63,6 +63,8 @@ class ProductsController extends Controller
 
     public function update(EditProductRequest $request, Product $product)
     {
+        
+        
         $product->update([
             'name' => $request->name,
             'description' => $request->description,
@@ -73,6 +75,18 @@ class ProductsController extends Controller
         ]);
 
         $product->tags()->sync($request->tags);
+
+        if($request->image){
+            //apaga imagem anterior
+            Storage::delete($product->image);
+
+            //cria a imagem;
+            $image = $request->image->store('products');
+
+            //atualiza o endereço da imagem no banco
+            $product->image = $image;
+            $product->save();
+        }
 
         session()->flash('success', 'Produto alterado com sucesso!');
         return redirect(route('products.index'));

@@ -61,6 +61,13 @@ class TagsController extends Controller
     public function destroy($id)
     {
         $tag = Tag::withTrashed()->where('id', $id)->firstOrFail();
+        
+        $product_count = $tag->products()->count();
+        if($tag->products()->count() > 0){
+            session()->flash('error', 'Não pode ser apagada pois temos ('.$product_count.') produto(s) com essa tag');
+            return redirect()->back();
+        }
+
         if($tag->trashed()){
             $tag->forceDelete();
             session()->flash('success', 'Tag removida com sucesso!');
