@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
-use App\Http\Requests\UpdateProfileRequest;
+use App\Http\Requests\EditProfileRequest;
 
 class UsersController extends Controller
 {
@@ -29,7 +29,7 @@ class UsersController extends Controller
     }
 
 
-    public function update(UpdateProfileRequest $request){
+    public function update(EditProfileRequest $request){
         $user = auth()->user();
         $user->name = $request->name;
         

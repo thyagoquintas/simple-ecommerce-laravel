@@ -22,16 +22,16 @@ class Product extends Model
         return in_array($tagId, $this->tags->pluck('id')->toArray());
     }
 
-    public function money($value){
-        return "R$".number_format($value,2);
-    }
-
-    public function fPrice(){
-        return $this->money($this->price);
-    }
-
-    public function fDiscountPrice(){
-        return $this->money($this->price * (1 - $this->discount/100));
-    }
+    public function discountPrice(){
+        return $this->fMoney($this->price * (1-$this->discount/100));
+     }
+ 
+     public function price(){
+         return $this->fMoney($this->price);
+     }
+ 
+     public function fMoney($value){
+         return 'R$'.number_format($value, 2);
+     }
 
 }
