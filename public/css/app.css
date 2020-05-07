@@ -44,6 +44,10 @@
   box-sizing: border-box;
 }
 
+.old-price{
+  text-decoration: line-through;
+}
+
 html {
   font-family: sans-serif;
   line-height: 1.15;
