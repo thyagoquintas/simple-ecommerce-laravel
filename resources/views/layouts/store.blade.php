@@ -11,6 +11,7 @@
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.13/dist/js/select2.min.js" defer></script>
+    <script src="https://kit.fontawesome.com/8455a3d02b.js" crossorigin="anonymous"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
@@ -75,11 +76,20 @@
 
                                 <div class="dropdown-menu dropdown-menu-right" aria-labelledby="navbarDropdown">
                                     <a href="{{ route('users.edit-profile') }}" class="dropdown-item">Meu Perfil</a>
+                                    @if(Auth::user()->isAdmin())
+                                        <a href="{{ route('home') }}" class="dropdown-item">Admin System</a>
+                                    @endif       
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST">
                                         @csrf
                                         <button type="submit" class="dropdown-item">{{ __('Logout') }}</button>
                                     </form>
                                 </div>
+                            </li>
+                            <li class="nav-item">
+                                <a href="{{ route('cart')}}" class="nav-link">
+                                    <i class="fas fa-shopping-cart"></i>
+                                    {{ Auth::user()->cart->products()->count() }}
+                                </a>
                             </li>
                         @endguest
                     </ul>

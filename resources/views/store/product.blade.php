@@ -21,7 +21,7 @@
                 <span>{{ $product->discountPrice() }}</span>
             </div>
             <div class="text-center mt-3">
-                <a href="#" class="btn btn-primary">Comprar</a>
+                <a href="{{ route('cart-store', $product->id) }}" class="btn btn-primary">Comprar</a>
             </div>
             <div class="text-center mt-5">
                 <h3>Tags</h3>

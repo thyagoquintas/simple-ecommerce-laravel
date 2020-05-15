@@ -36,7 +36,7 @@
                 </div>
                 <div class="text-center mt-3">
                     <a href="{{ route('show-product', $product->id) }}" class="btn btn-primary btn-sm">Visualizar</a>
-                    <a href="#" class="btn btn-secondary btn-sm">Comprar</a>
+                    <a href="{{ route('cart-store', $product->id) }}" class="btn btn-secondary btn-sm">Comprar</a>
                 </div>
             </div>
         @endforeach
