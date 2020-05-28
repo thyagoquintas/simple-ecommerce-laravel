@@ -55,7 +55,14 @@
                             </div>
                         </li>
                     </ul>
-
+                    <form action="{{ route('serach-product') }}" class="form-group m-0 w-50">
+                        <div class="input-group">
+                            <input type="text" class="form-control" placeholder="Digite o nome do produto" name="s">
+                            <div class="input-group-append">
+                                <button type="submit" class="input-group-text"><i class="fas fa-search"></i></button>
+                            </div>
+                        </div>
+                    </form>
                     <!-- Right Side Of Navbar -->
                     <ul class="navbar-nav ml-auto">
                         <!-- Authentication Links -->

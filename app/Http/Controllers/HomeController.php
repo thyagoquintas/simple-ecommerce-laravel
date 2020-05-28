@@ -26,6 +26,18 @@ class HomeController extends Controller
         return view('store.search')->with('products', $tag->products()->paginate(1))->with('title', $tag->name);
     }
 
+    public function searchProduct(Request $request){
+        $search = $request->query('s');
+
+        if($search){
+            $products = Product::where('name','LIKE',"%{$search}%");
+            return view('store.search')->with('products', $products->paginate(1))->with('title', $search);
+        }else{
+            session()->flash('error', 'Você precisa digitar o nome de algum produto.');
+            return redirect()->back();
+        }        
+    }
+
     public function showProduct(Product $product){
         return view('store.product')->with('product',$product);
     }

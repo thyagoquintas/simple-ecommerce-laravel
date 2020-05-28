@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="row">
-        @foreach($products as $product)
+        @forelse($products as $product)
             <div class="mx-auto col-sm-10 col-md-6 col-lg-3">
                 <img src="{{ asset('storage/'.$product->image) }}" class="img-fluid">
                 <span class="d-block h6 text-center mt-3">{{ $product->name }}</span>
@@ -21,10 +21,12 @@
                     <a href="#" class="btn btn-secondary btn-sm">Comprar</a>
                 </div>
             </div>
-        @endforeach
+        @empty
+            <p class="mt-4">Não foi encontrado nenhum produto com o nome <strong>{{ $title }}</strong></p>
+        @endforelse
     </div>
     <div class="d-flex justify-content-center mt-4">
-        {{ $products->links() }}
+        {{ $products->appends(['s' => request()->query('s')])->links() }}
     </div>
 </section>
 @endsection

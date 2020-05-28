@@ -6,6 +6,7 @@ Auth::routes();
 Route::get('/', 'HomeController@show');
 Route::get('/search/category/{category}', 'HomeController@searchCategory')->name('serach-category');
 Route::get('/search/tag/{tag}', 'HomeController@searchTag')->name('serach-tag');
+Route::get('/search/product/', 'HomeController@searchProduct')->name('serach-product');
 Route::get('/show/{product}', 'HomeController@showProduct')->name('show-product');
 
 Route::middleware(['auth'])->group(function(){
